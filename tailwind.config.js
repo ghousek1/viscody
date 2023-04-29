@@ -4,8 +4,15 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {fontFamily: {
+      monospace: ['Roboto Mono', 'monospace'],
+      Poppins: ["Poppins", "sans-serif"],
+      Inter: ["Inter", "sans-serif"]
+    },
+    screens: {
+      'below-md': "860px",
+    }
+  },
   },
   plugins: [],
 }
-

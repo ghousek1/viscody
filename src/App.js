@@ -1,10 +1,15 @@
-import './App.css';
-import ComingSoon from './components/ComingSoon';
+import "./App.css";
+import HomeSection from "./components/HomeSection";
+import NavBar from "./components/Navbar";
+import ThemeContextDefaultProvider from "./context/ThemeContextProvider";
 
 function App() {
   return (
     <div className="App">
-      <ComingSoon/>
+      <ThemeContextDefaultProvider>
+        <NavBar/>
+        <HomeSection/>
+      </ThemeContextDefaultProvider>
     </div>
   );
 }

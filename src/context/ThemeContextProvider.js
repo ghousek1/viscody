@@ -12,10 +12,13 @@ function ThemeContextDefaultProvider(props) {
         const colorScheme = event.matches ? "dark" : "light";
         setUserThemeMode(colorScheme);
       });
-
-    toggleUserThemeMode();
-    toggleCSSVariables();
   }, []);
+
+  useEffect(() => {
+    console.log("userThemeMode changed- ",userThemeMode);
+    toggleCSSVariables();
+  }, [userThemeMode]);
+
 
   const lightThemeCSSVariables = [
     {
@@ -41,7 +44,6 @@ function ThemeContextDefaultProvider(props) {
 
   const toggleUserThemeMode = () => {
     setUserThemeMode(userThemeMode === "dark" ? "light" : "dark");
-    toggleCSSVariables();
   };
 
   const toggleCSSVariables = () => {

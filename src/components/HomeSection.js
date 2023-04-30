@@ -1,42 +1,70 @@
-import React from 'react'
+import React, { useContext, useState } from "react";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import Editor from "@monaco-editor/react";
+import { DataTypeContext } from "../context/DataTypeContext";
+import { ThemeContext } from "../context/ThemeContext";
 
 function HomeSection() {
+  const editorDataTypeMap = {
+    json: "json",
+    yaml: "yaml",
+    xml: "xml",
+    csv: "csv",
+  };
+
+  const visualizerDataTypeMap = {
+    json: "json",
+    yaml: "yaml",
+    xml: "xml",
+    csv: "csv",
+  };
+
+  // const editorThemeMap = {
+  //   light: "vs-light",
+  //   dark: "vs-dark",
+  // };
+
+  const [codeText, setCodeText] = useState("");
+  const [editorTheme, setEditorTheme] = useState("vs-light");
+  const [dataType, changeDataType] = useContext(DataTypeContext);
+  const [userThemeMode, toggleUserThemeMode] = useContext(ThemeContext);
+
+  function handleEditorChange(value, event) {
+    setCodeText(value);
+  }
+
   return (
     <>
-    <div
-    className="flex flex-col items-center justify-center w-full h-screen my-3 text-white bg-gradient-to-bl from-black to-red-500">
-    <h1 className="text-[3rem]"> <b>Viscody</b> </h1>
-    <p>Stay tuned for something amazing!!!</p>
-
-    <div className="grid grid-cols-1 gap-10 mt-10 sm:grid-cols-2 lg:grid-cols-4 lg:mt-20">
-
-        <div className="text-center bg-transparent border">
-            <p className="px-10 py-5 text-5xl">15</p>
-            <hr/>
-            <p className="px-10 py-5">days</p>
+      <div
+        id="homeSection"
+        className="flex flex-col items-center w-full h-full my-3 md:flex-row"
+      >
+        <div id="editor" className="h-[40vh] w-full md:h-screen md:w-[60%]">
+          <Editor
+            defaultLanguage={editorDataTypeMap[dataType]}
+            theme={userThemeMode === "dark" ? "vs-dark" : "vs-light"}
+            defaultValue=""
+            options={{
+              minimap: {
+                enabled: false,
+              },
+              matchBrackets: 'always',
+              automaticLayout: true,
+              wordWrap: "on",
+            }}
+            onChange={handleEditorChange}
+          />
+          ;
         </div>
 
-        <div className="text-center bg-transparent border">
-            <p className="px-10 py-5 text-5xl">00</p>
-            <hr/>
-            <p className="px-10 py-5">hours</p>
+        <div id="visualizer" className="h-[40vh] w-full md:h-screen md:w-[60%]">
+          <SyntaxHighlighter language={visualizerDataTypeMap[dataType]}>
+            {codeText}
+          </SyntaxHighlighter>{" "}
         </div>
-
-        <div className="text-center bg-transparent border">
-            <p className="px-10 py-5 text-5xl">00</p>
-            <hr/>
-            <p className="px-10 py-5">mins</p>
-        </div>
-        <div className="text-center bg-transparent border">
-            <p className="px-10 py-5 text-5xl">00</p>
-            <hr/>
-            <p className="px-10 py-5">secs</p>
-        </div>
-    </div>
-    
-</div>
+      </div>
     </>
-  )
+  );
 }
 
-export default HomeSection
+export default HomeSection;

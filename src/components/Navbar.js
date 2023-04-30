@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-scroll";
 import { ThemeContext } from "../context/ThemeContext";
+import DataTypeDropDown from "./DataTypeDropDown";
 
 function NavBar() {
   const [sideMenu, setSideMenu] = useState(false);
@@ -19,7 +20,7 @@ function NavBar() {
     { name: "Import", url: "import" },
     { name: "Download", url: "download" },
     { name: "Settings", url: "settings" },
-    { name: "Github Repo", url: "githubrepo" },
+    { name: "Github", url: "github" },
   ];
 
   return (
@@ -30,6 +31,7 @@ function NavBar() {
       <a href="/" className="z-[100] cursor-pointer">
         <span className=" bold text-3xl font-[500]">Viscody</span>
       </a>
+      <DataTypeDropDown/>
       <div
         className={`${sideMenu ? "flex" : "hidden md:flex"}
          fixed left-0  top-0 z-[100] h-full  w-full flex-col items-end justify-center

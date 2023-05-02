@@ -5,7 +5,7 @@ module.exports = {
   ],
   theme: {
     extend: {fontFamily: {
-      monospace: ['Roboto Mono', 'monospace'],
+      monospace: ['JetBrains Mono', 'monospace'],
       Poppins: ["Poppins", "sans-serif"],
       Inter: ["Inter", "sans-serif"]
     },

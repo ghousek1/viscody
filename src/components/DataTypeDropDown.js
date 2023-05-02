@@ -13,14 +13,16 @@ function DataTypeDropDown() {
   return (
     <div className="">
       <select
+      defaultValue="json"
         id="langTypes"
         className={`${userThemeMode === "dark" ? "bg-black text-white" : "text-black"} 
-        text-s w-full rounded-lg
+        text-s w-full rounded-lg 
+        font-monospace text-[0.7rem] leading-[1.2rem] md:text-[0.9rem] md:leading-[1.5rem]
         border p-2.5`}
         
         onChange={(e) => modifyDataType(e.target.value)}
       >
-        <option selected value="json"> json </option>
+        <option value="json"> json </option>
         <option value="yaml">yaml</option>
         <option value="xml">xml</option>
         <option value="csv">csv</option>

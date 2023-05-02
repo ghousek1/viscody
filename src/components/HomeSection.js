@@ -3,6 +3,7 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import Editor from "@monaco-editor/react";
 import { DataTypeContext } from "../context/DataTypeContext";
 import { ThemeContext } from "../context/ThemeContext";
+import Visualizer from "./Visualizer";
 
 function HomeSection() {
   const editorDataTypeMap = {
@@ -11,18 +12,6 @@ function HomeSection() {
     xml: "xml",
     csv: "csv",
   };
-
-  const visualizerDataTypeMap = {
-    json: "json",
-    yaml: "yaml",
-    xml: "xml",
-    csv: "csv",
-  };
-
-  // const editorThemeMap = {
-  //   light: "vs-light",
-  //   dark: "vs-dark",
-  // };
 
   const [codeText, setCodeText] = useState("");
   const [editorTheme, setEditorTheme] = useState("vs-light");
@@ -48,20 +37,15 @@ function HomeSection() {
               minimap: {
                 enabled: false,
               },
-              matchBrackets: 'always',
+              matchBrackets: "always",
               automaticLayout: true,
               wordWrap: "on",
             }}
             onChange={handleEditorChange}
           />
-          ;
         </div>
 
-        <div id="visualizer" className="h-[40vh] w-full md:h-screen md:w-[60%]">
-          <SyntaxHighlighter language={visualizerDataTypeMap[dataType]}>
-            {codeText}
-          </SyntaxHighlighter>{" "}
-        </div>
+        <Visualizer codeText={codeText}/>
       </div>
     </>
   );

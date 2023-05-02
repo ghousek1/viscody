@@ -15,7 +15,6 @@ function ThemeContextDefaultProvider(props) {
   }, []);
 
   useEffect(() => {
-    console.log("userThemeMode changed- ",userThemeMode);
     toggleCSSVariables();
   }, [userThemeMode]);
 

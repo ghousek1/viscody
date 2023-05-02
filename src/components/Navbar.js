@@ -28,10 +28,12 @@ function NavBar() {
       id="navbar"
       className="flex h-[2rem] w-full items-center justify-between px-3 md:px-6 my-2 md:my-2 "
     >
+      <div className="flex flex-row gap-5 ">
       <a href="/" className="z-[100] cursor-pointer">
-        <span className=" bold text-3xl font-[500]">Viscody</span>
+        <span className="tracking-[0.15rem] bold  font-monospace text-[0.9rem] leading-[1.5rem] font-[450] md:text-[1.2rem] md:leading-[2rem] md:font-[500]">Viscody</span>
       </a>
       <DataTypeDropDown/>
+      </div>
       <div
         className={`${sideMenu ? "flex" : "hidden md:flex"}
          fixed left-0  top-0 z-[100] h-full  w-full flex-col items-end justify-center
@@ -39,8 +41,8 @@ function NavBar() {
          md:justify-center md:bg-transparent md:p-0`}
       >
         <ul
-          className=" mr-4 flex flex-col font-monospace text-[1.5rem]
-           font-[400] leading-10 tracking-wide md:flex-row md:text-[1rem] md:leading-8"
+          className=" mr-4 flex flex-col font-monospace text-[0.8rem] leading-[1.5rem] md:text-[0.9rem] md:leading-[1.5rem]
+           font-[410] tracking-[0.14rem] md:flex-row "
         >
           {navlinks.map((navLink) => (
             <li key={navLink.name} className="px-5 py-3 md:px-4 md:py-0">
@@ -70,7 +72,7 @@ function NavBar() {
       <i
         onClick={toggleSideMenu}
         className={` fas fa-${sideMenu ? "close" : "bars-staggered"} 
-                    z-[100] w-[1rem] cursor-pointer text-center text-xl md:hidden `}
+                    z-[100] w-[1rem] cursor-pointer text-center text-[1rem] text-xl md:hidden `}
       />
     </nav>
   );

@@ -28,8 +28,9 @@ function HomeSection() {
         id="homeSection"
         className="flex flex-col items-center w-full h-full my-3 md:flex-row"
       >
-        <div id="editor" className="h-[40vh] w-full md:h-screen md:w-[60%]">
+        <div id="editor" className="h-[40vh] w-full md:h-screen md:w-[35%]">
           <Editor
+          width={100}
             defaultLanguage={editorDataTypeMap[dataType]}
             theme={userThemeMode === "dark" ? "vs-dark" : "vs-light"}
             defaultValue=""

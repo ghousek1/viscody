@@ -3,6 +3,8 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { DataTypeContext } from "../context/DataTypeContext";
 import { ThemeContext } from "../context/ThemeContext";
 // import XMLParser from "react-xml-parser";
+// import { CsvToHtmlTable } from 'react-csv-to-table';
+import CanvasDraw from "react-canvas-draw-pan-zoom";
 
 function Visualizer(props) {
   const [dataType, changeDataType] = useContext(DataTypeContext);
@@ -74,12 +76,26 @@ function Visualizer(props) {
     return "";
   };
 
+
+  const renderVisualization = (codeText) => {
+    if(props.codeText==="csv"){
+      return <></>  
+    //   <CsvToHtmlTable
+    //     data={sampleData}
+    //     csvDelimiter=","
+    //   />
+    } 
+
+    return convertToJson(codeText);
+    
+  }
   return (
     <>
-      <div id="visualizer" className="h-[40vh] w-full md:h-screen md:w-[60%]">
-        <SyntaxHighlighter language={visualizerDataTypeMap[dataType]}>
-        {convertToJson(props.codeText)}
-        </SyntaxHighlighter>
+      <div id="visualizer" className="h-[60vh] w-full md:h-screen md:w-[65%]">
+        {/* <SyntaxHighlighter language={visualizerDataTypeMap[dataType]}> */}
+        {renderVisualization(props.codeText)}
+        {/* <CanvasDraw/> */}
+        {/* </SyntaxHighlighter> */}
       </div>
     </>
   );

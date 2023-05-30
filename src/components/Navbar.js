@@ -17,10 +17,10 @@ function NavBar() {
   };
 
   const navlinks = [
-    { name: "Import", url: "import" },
-    { name: "Download", url: "download" },
-    { name: "Settings", url: "settings" },
-    { name: "Github", url: "github" },
+    { name: "import", url: "import" },
+    { name: "download", url: "download" },
+    { name: "settings", url: "settings" },
+    { name: "github", url: "github" },
   ];
 
   return (
@@ -30,7 +30,9 @@ function NavBar() {
     >
       <div className="flex flex-row gap-5 ">
       <a href="/" className="z-[100] cursor-pointer">
-        <span className="tracking-[0.15rem] bold  font-monospace text-[0.9rem] leading-[1.5rem] font-[450] md:text-[1.2rem] md:leading-[2rem] md:font-[500]">Viscody</span>
+        <span className="tracking-[0.15rem] bold  
+        font-monospace text-[0.9rem] leading-[1.5rem] 
+        font-[450] md:text-[1.2rem] md:leading-[2rem] md:font-[500]">viscody</span>
       </a>
       <DataTypeDropDown/>
       </div>
@@ -72,7 +74,7 @@ function NavBar() {
       <i
         onClick={toggleSideMenu}
         className={` fas fa-${sideMenu ? "close" : "bars-staggered"} 
-                    z-[100] w-[1rem] cursor-pointer text-center text-[1rem] text-xl md:hidden `}
+                    z-[100] w-[1rem] cursor-pointer text-center text-[0.85rem] md:hidden `}
       />
     </nav>
   );

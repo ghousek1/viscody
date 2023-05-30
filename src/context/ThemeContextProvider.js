@@ -22,22 +22,22 @@ function ThemeContextDefaultProvider(props) {
   const lightThemeCSSVariables = [
     {
       name: "--custom-background-color",
-      value: "#fdfdfd",
+      value: "#fcfcfc",
     },
     {
       name: "--custom-font-color",
-      value: "#090909",
+      value: "#141414",
     },
   ];
 
   const darkThemeCSSVariables = [
     {
       name: "--custom-background-color",
-      value: "#090909",
+      value: "#141414",
     },
     {
       name: "--custom-font-color",
-      value: "#fdfdfd",
+      value: "#fcfcfc",
     },
   ];
 

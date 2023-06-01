@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { DataTypeContext } from "../context/DataTypeContext";
 import { ThemeContext } from "../context/ThemeContext";
 
 function DataTypeDropDown() {
-  const [dataType, changeDataType] = useContext(DataTypeContext);
-  const [userThemeMode, toggleUserThemeMode] = useContext(ThemeContext);
+  const [ ,changeDataType] = useContext(DataTypeContext);
+  const [userThemeMode] = useContext(ThemeContext);
 
   const modifyDataType = (value) => {
     changeDataType(value);
@@ -16,9 +16,9 @@ function DataTypeDropDown() {
       defaultValue="json"
         id="langTypes"
         className={`${userThemeMode === "dark" ? "bg-black text-white" : "text-black"} 
-        text-s w-full rounded-lg 
-        font-monospace text-[0.7rem] leading-[1.2rem] md:text-[0.9rem] md:leading-[1.5rem]
-        border p-2.5`}
+        text-s w-full
+        font-uno text-[0.7rem] leading-[1.2rem] md:text-[0.9rem]
+        border p-2`}
         
         onChange={(e) => modifyDataType(e.target.value)}
       >

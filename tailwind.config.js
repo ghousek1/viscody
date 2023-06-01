@@ -5,9 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {fontFamily: {
+      uno:["Source Sans Pro", "sans-serif"],
       monospace: ['JetBrains Mono', 'monospace'],
-      Poppins: ["Poppins", "sans-serif"],
-      Inter: ["Inter", "sans-serif"]
+
     },
     screens: {
       'below-md': "860px",

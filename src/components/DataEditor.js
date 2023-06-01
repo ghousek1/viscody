@@ -1,9 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import Editor from "@monaco-editor/react";
 import { DataTypeContext } from "../context/DataTypeContext";
 import { ThemeContext } from "../context/ThemeContext";
 
-function DataEditor() {
+function DataEditor({handleEditorChange}) {
+  
   const editorDataTypeMap = {
     json: "json",
     yaml: "yaml",
@@ -11,32 +12,26 @@ function DataEditor() {
     csv: "csv",
   };
 
-  const [codeText, setCodeText] = useState("");
-  const [dataType, changeDataType] = useContext(DataTypeContext);
-  const [userThemeMode, toggleUserThemeMode] = useContext(ThemeContext);
-
-  function handleEditorChange(value, event) {
-    setCodeText(value);
-  }
+  const [dataType] = useContext(DataTypeContext);
+  const [userThemeMode] = useContext(ThemeContext);
 
   return (
     <>
-      <div id="editor" className="h-[40vh] w-full md:h-screen md:w-[60%]">
-        <Editor
-          defaultLanguage={editorDataTypeMap[dataType]}
-          theme={userThemeMode === "dark" ? "vs-dark" : "vs-light"}
-          defaultValue=""
-          options={{
-            minimap: {
-              enabled: false,
-            },
-            matchBrackets: "always",
-            automaticLayout: true,
-            wordWrap: "on",
-          }}
-          onChange={handleEditorChange}
-        />
-      </div>
+      <Editor
+        className="w-[100%]"
+        defaultLanguage={editorDataTypeMap[dataType]}
+        theme={userThemeMode === "dark" ? "vs-dark" : "vs-light"}
+        defaultValue=""
+        options={{
+          minimap: {
+            enabled: false,
+          },
+          matchBrackets: "always",
+          wordWrap: "on",
+          automaticLayout: true,
+        }}
+        onChange={handleEditorChange}
+      />
     </>
   );
 }

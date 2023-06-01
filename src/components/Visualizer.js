@@ -2,100 +2,61 @@ import React, { useContext, useState } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { DataTypeContext } from "../context/DataTypeContext";
 import { ThemeContext } from "../context/ThemeContext";
-// import XMLParser from "react-xml-parser";
-// import { CsvToHtmlTable } from 'react-csv-to-table';
-import CanvasDraw from "react-canvas-draw-pan-zoom";
+import {convertToJson} from ".././helper/DataConverter"
+import ReactFlow, {
+  useNodesState,
+  useEdgesState,
+  addEdge,
+  MiniMap,
+  Controls,
+  Background,
+} from "reactflow";
+import "reactflow/dist/style.css";
 
 function Visualizer(props) {
   const [dataType, changeDataType] = useContext(DataTypeContext);
   const [userThemeMode, toggleUserThemeMode] = useContext(ThemeContext);
 
-  const visualizerDataTypeMap = {
-    json: "json",
-    yaml: "yaml",
-    xml: "xml",
-    csv: "csv",
-  };
+  const initialNodes = [
+    { id: "1", position: { x: 0, y: 0 }, data: { label: "1" } },
+    { id: "2", position: { x: 0, y: 100 }, data: { label: "2" } },
+    { id: "3", position: { x: 0, y: 150 }, data: { label: "3" } },
+  ];
+  const initialEdges = [
+    { id: "e1-2", source: "1", target: "2" },
+    { id: "e3-1", source: "3", target: "1" },
+  ];
 
-  const convertYamlToJson = (codeText) => {
-    const yaml = require("js-yaml");
-    try {
-      if (typeof codeText !== "undefined" && codeText !== "") {
-        const result = yaml.load(codeText);
-        return JSON.stringify(result).toString();
-      } else {
-        return "";
-      }
-    } catch (exp) {
-      return "INVALID YAML";
+  const renderVisualization = (dataType, codeText) => {
+    if (dataType === "csv") {
+      return <></>;
+      //   <CsvToHtmlTable
+      //     data={sampleData}
+      //     csvDelimiter=","
+      //   />
     }
-  };
-
-  const convertXmlToJson = (codeText) => {
-    var convert = require("xml-js");
-    try {
-      if (typeof codeText !== "undefined" && codeText !== "") {
-        // var result = convert.xml2json(codeText, { compact: true, spaces: 4 });
-        var result = convert.xml2json(codeText, { compact: false, spaces: 4 });
-        //console.log(result, "\n", result2);
-        return JSON.stringify(result);
-      } else {
-        return "";
-      }
-    } catch (exp) {
-      console.log("XML parsing exp: ",exp);
-      return "INVALID XML";
-    }
-  };
-
-  const convertToJson = (codeText) => {
-    // const yaml = require("js-yaml");
-    let result = "";
-    switch (dataType) {
-      case "json":
-        result = codeText;
-        break;
-      case "yaml":
-        result = convertYamlToJson(codeText);
-        break;
-      case "xml":
-        result = convertXmlToJson(codeText);
-        break;
-      case "csv":
-        result = "CSV";
-        break;
-      default:
-        result = "";
-    }
-
-    console.log("type of data: ", typeof result);
-
-    if (typeof result === "string") {
-      return result;
-    }
-    return "";
-  };
-
-
-  const renderVisualization = (codeText) => {
-    if(props.codeText==="csv"){
-      return <></>  
-    //   <CsvToHtmlTable
-    //     data={sampleData}
-    //     csvDelimiter=","
-    //   />
-    } 
 
     return convertToJson(codeText);
-    
-  }
+  };
   return (
     <>
-      <div id="visualizer" className="h-[60vh] w-full md:h-screen md:w-[65%]">
-        {/* <SyntaxHighlighter language={visualizerDataTypeMap[dataType]}> */}
-        {renderVisualization(props.codeText)}
-        {/* <CanvasDraw/> */}
-        {/* </SyntaxHighlighter> */}
+      <div
+        id="visualizer"
+        // style={customStyle}
+        className=" w-full h-[100%]  
+         border-gray-500 border-[0.1rem]"
+      >
+        <ReactFlow
+          nodes={initialNodes}
+          edges={initialEdges}
+          attributionPosition="top-right"
+          elevateNodesOnSelect={true}
+        >
+          <Background variant="dots" style={{ background: "white" }} />
+          <Controls position="top-right" style={{ background: "black" }} />
+          <MiniMap position = "bottom-right" zoomable pannable/>
+        </ReactFlow>
+
       </div>
     </>
   );

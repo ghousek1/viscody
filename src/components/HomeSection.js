@@ -1,54 +1,79 @@
-import React, { useContext, useState } from "react";
-import SyntaxHighlighter from "react-syntax-highlighter";
-import Editor from "@monaco-editor/react";
-import { DataTypeContext } from "../context/DataTypeContext";
-import { ThemeContext } from "../context/ThemeContext";
+import React from "react";
+import { useState, useRef, useCallback } from "react";
 import Visualizer from "./Visualizer";
+import DataEditor from "./DataEditor";
 
 function HomeSection() {
-  const editorDataTypeMap = {
-    json: "json",
-    yaml: "yaml",
-    xml: "xml",
-    csv: "csv",
-  };
-
   const [codeText, setCodeText] = useState("");
-  const [editorTheme, setEditorTheme] = useState("vs-light");
-  const [dataType, changeDataType] = useContext(DataTypeContext);
-  const [userThemeMode, toggleUserThemeMode] = useContext(ThemeContext);
-
   function handleEditorChange(value, event) {
     setCodeText(value);
   }
 
+  const sidebarRef = useRef(null);
+  const [isResizing, setIsResizing] = useState(false);
+  const [sidebarWidth, setSidebarWidth] = useState(null);
+
+  const startResizing = useCallback((mouseDownEvent) => {
+    setIsResizing(true);
+  }, []);
+
+  const stopResizing = useCallback(() => {
+    setIsResizing(false);
+  }, []);
+
+  const resize = useCallback(
+    (mouseMoveEvent) => {
+      if (isResizing) {
+        setSidebarWidth(
+          mouseMoveEvent.clientX -
+            sidebarRef.current.getBoundingClientRect().left
+        );
+      }
+    },
+    [isResizing]
+  );
+
+  React.useEffect(() => {
+    window.addEventListener("mousemove", resize);
+    window.addEventListener("mouseup", stopResizing);
+    return () => {
+      window.removeEventListener("mousemove", resize);
+      window.removeEventListener("mouseup", stopResizing);
+    };
+  }, [resize, stopResizing]);
+
   return (
-    <>
+    <div id="container-id" className="relative flex h-[100vh] flex-row">
       <div
-        id="homeSection"
-        className="flex flex-col items-center w-full h-full my-3 md:flex-row"
+        ref={sidebarRef}
+        id="sidebar"
+        style={{ width: sidebarWidth }}
+        className="z-2 flex w-[35%] min-w-[20%]
+         max-w-[70%] flex-row
+        border-[0.1rem] border-r-black "
+        onMouseDown={(e) => e.preventDefault()}
       >
-        <div id="editor" className="h-[40vh] w-full md:h-screen md:w-[35%]">
-          <Editor
-          width={100}
-            defaultLanguage={editorDataTypeMap[dataType]}
-            theme={userThemeMode === "dark" ? "vs-dark" : "vs-light"}
-            defaultValue=""
-            options={{
-              minimap: {
-                enabled: false,
-              },
-              matchBrackets: "always",
-              automaticLayout: true,
-              wordWrap: "on",
-            }}
-            onChange={handleEditorChange}
-          />
+        <div
+          id="sidebar-content-id"
+          className="h-[100%]
+        flex-1 resize-y overflow-auto"
+        >
+          <DataEditor handleEditorChange={handleEditorChange} />
         </div>
 
-        <Visualizer codeText={codeText}/>
+        <div
+          id="sidebar-resizer-id"
+          className=" z-3
+              basis-2 cursor-col-resize 
+              hover:w-[3rem] hover:bg-gray-500"
+          onMouseDown={startResizing}
+        ></div>
       </div>
-    </>
+
+      <div id="content-id" className="z-1 flex-1">
+        <Visualizer codeText={codeText} />
+      </div>
+    </div>
   );
 }
 

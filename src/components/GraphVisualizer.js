@@ -63,7 +63,7 @@ const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
   initialEdges
 );
 
-function Visualizer2({ newNodes, newEdges }) {
+function GraphVisualizer({codeText, newNodes, newEdges }) {
   const [userThemeMode, ] = useContext(ThemeContext);
   const [layoutDirection, ] = useState("TB");
 
@@ -81,16 +81,16 @@ function Visualizer2({ newNodes, newEdges }) {
       setEdges([...layoutedEdges]);
   };
 
-  const onConnect = useCallback(
-    (params) =>
-      setEdges((eds) =>
-        addEdge(
-          { ...params, type: ConnectionLineType.SmoothStep, animated: false },
-          eds
-        )
-      ),
-    []
-  );
+  // const onConnect = useCallback(
+  //   (params) =>
+  //     setEdges((eds) =>
+  //       addEdge(
+  //         { ...params, type: ConnectionLineType.SmoothStep, animated: false },
+  //         eds
+  //       )
+  //     ),
+  //   []
+  // );
 
   const onLayout = useCallback(
     (direction) => {
@@ -119,7 +119,7 @@ function Visualizer2({ newNodes, newEdges }) {
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
+          // onConnect={onConnect}
           connectionLineType={ConnectionLineType.SmoothStep}
           fitView
         >
@@ -150,4 +150,4 @@ function Visualizer2({ newNodes, newEdges }) {
   );
 }
 
-export default Visualizer2;
+export default GraphVisualizer;

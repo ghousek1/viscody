@@ -1,6 +1,6 @@
 import React from "react";
-import { useState, useRef, useCallback,useContext } from "react";
-import Visualizer2 from "./Visualizer2";
+import { useState, useRef, useCallback,useContext ,useEffect} from "react";
+import Visualizer from "./Visualizer";
 import DataEditor from "./DataEditor";
 import { DataTypeContext } from "../context/DataTypeContext";
 
@@ -14,10 +14,15 @@ function HomeSection() {
   
   function handleEditorChange(value, event) {
     setCodeText(value);
-    let [newUpdatedNodes, newUpdatedEdges] = getNodesAndEdges(dataType,value);
+  }
+
+  useEffect(() => {
+    let [newUpdatedNodes, newUpdatedEdges] = getNodesAndEdges(dataType,codeText);
+    // console.log("newUpdatedNodes",newUpdatedNodes);
+    // console.log("newUpdatedEdges",newUpdatedEdges);
     setNewNodes([...newUpdatedNodes]);
     setNewEdges([...newUpdatedEdges]);
-  }
+  }, [codeText]); 
 
   const sidebarRef = useRef(null);
   const [isResizing, setIsResizing] = useState(false);
@@ -80,7 +85,8 @@ function HomeSection() {
       </div>
 
       <div id="content-id" className="flex-1 z-1">
-        <Visualizer2
+        <Visualizer
+          codeText={codeText}
           newNodes={newNodes}
           newEdges={newEdges}
         />

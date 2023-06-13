@@ -46,8 +46,6 @@ const convertToJson = (dataType, codeText) => {
       result = "";
   }
 
-  console.log("type of data: ", typeof result);
-
   if (typeof result === "string") {
     return result;
   }

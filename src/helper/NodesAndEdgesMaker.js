@@ -25,17 +25,17 @@ export const newEdges = [
 
 
 export const getNodesAndEdges = (dataType,value) =>{
+  const emptyData = [[], []];
   const element = getElements(dataType,value);
 
-  
   if(element === null){
-    return [[],[]];
+    return emptyData;
   }
 
   const [nodes,edges] = getMasterNodesAndEdges(element);
-  // console.log("nodes: ",nodes);
+  if(nodes === undefined || edges === undefined){
+    return emptyData;
+  }
 
-  return [nodes,[]];
-
-  
+  return  [nodes,edges];
 }

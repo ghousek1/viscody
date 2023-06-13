@@ -12,7 +12,6 @@ export const getMasterNodesAndEdges = (element) => {
   return getNodesAndEdgesOfObject(element);
 };
 
-
 const getNodesAndEdgesOfObject = (element) => {
   let nodes = [];
   let edges = [];
@@ -22,18 +21,25 @@ const getNodesAndEdgesOfObject = (element) => {
   }
 
   let elementName = "root";
-  let masterNodes = getNodeBasedOnType(element, elementName, null);
+  let masterNodeAndEdges = getNodeAndEdgeBasedOnType(
+    element,
+    elementName,
+    null
+  );
+  let masterNodes = masterNodeAndEdges.map((ne) => ne.node);
+  let masterEdges = masterNodeAndEdges.map((ne) => ne.edge);
+
   nodes.push(...masterNodes);
+  edges.push(...masterEdges);
+
   if (masterNodes.length === 0) {
-    return nodes;
+    return [nodes, edges];
   }
 
   [nodes, edges] = superFunc(nodes, edges, masterNodes);
 
-  return [nodes, []];
+  return [nodes, edges];
 };
-
-
 
 const getNodesAndEdgesOfArray = (element) => {
   let nodes = [];
@@ -46,9 +52,18 @@ const getNodesAndEdgesOfArray = (element) => {
   element = element.flat();
   for (let i = 0; i < element.length; i++) {
     let elementName = `root~${i}`;
-    let masterNodes = getNodeBasedOnType(element[i], elementName, null);
+    let masterNodeAndEdges = getNodeAndEdgeBasedOnType(
+      element[i],
+      elementName,
+      null
+    );
+    let masterNodes = masterNodeAndEdges.map((ne) => ne.node);
+    let masterEdges = masterNodeAndEdges.map((ne) => ne.edge);
+
     multiMasterNodes.push(...masterNodes);
+    edges.push(...masterEdges);
   }
+
   nodes.push(...multiMasterNodes);
 
   if (multiMasterNodes.length === 0) {
@@ -57,24 +72,33 @@ const getNodesAndEdgesOfArray = (element) => {
 
   [nodes, edges] = superFunc(nodes, edges, multiMasterNodes);
 
-  return [nodes, []];
+  return [nodes, edges];
 };
 
-const getNodeBasedOnType = (element, elementName, parentId) => {
+const getNodeAndEdgeBasedOnType = (element, elementName, parentId) => {
   let dataType = identifyJsonDataType(element);
   if (dataType === "object") {
-    let resultNode = processObjectTypeNode(element, elementName, parentId);
-    return [resultNode];
+    let resultNodeAndEdge = processObjectTypeNode(
+      element,
+      elementName,
+      parentId
+    );
+    return [resultNodeAndEdge];
   }
 
   if (dataType === "array") {
-    let resultNodes = processArrayTypeNode(element, elementName, parentId);
-    return resultNodes;
+    let resultNodeAndEdges = processArrayTypeNode(
+      element,
+      elementName,
+      parentId
+    );
+    return resultNodeAndEdges;
   }
 
   if (dataType === "mono") {
-    let resultNode = processMonoTypeNode(element, elementName, parentId);
-    return [resultNode];
+    let resultNodeAndEdge = processMonoTypeNode(element, elementName, parentId);
+
+    return [resultNodeAndEdge];
   }
 
   return [];
@@ -88,7 +112,7 @@ const generateIdOfElem = (parentId, elementName) => {
 };
 
 const processObjectTypeNode = (element, elementName, parentId) => {
-  let ultraElem = {};
+  let ultraNode = {};
   let flatElem = {};
   let nestedElements = [];
 
@@ -111,26 +135,34 @@ const processObjectTypeNode = (element, elementName, parentId) => {
     }
   });
 
-  ultraElem["id"] = generateIdOfElem(parentId, elementName);
-  ultraElem["parentId"] = parentId;
-  ultraElem["value"] = flatElem;
-  ultraElem["data"] = { label: JSON.stringify(flatElem) };
-  ultraElem["nestedElements"] = nestedElements;
-  ultraElem["position"] = position;
-  return ultraElem;
+  let ultraNodeId = generateIdOfElem(parentId, elementName);
+  ultraNode["id"] = ultraNodeId;
+  ultraNode["parentId"] = parentId;
+  ultraNode["value"] = flatElem;
+  ultraNode["data"] = { label: JSON.stringify(flatElem ,null, 4) };
+  ultraNode["nestedElements"] = nestedElements;
+  ultraNode["position"] = position;
+
+  let ultraEdge = {};
+  ultraEdge["id"] = `edge-${ultraNodeId}`;
+  ultraEdge["source"] = parentId;
+  ultraEdge["target"] = ultraNodeId;
+  ultraEdge["type"] = edgeType;
+
+  return { node: ultraNode, edge: ultraEdge };
 };
 
 const processArrayTypeNode = (element, elementName, parentId) => {
   element = element.flat();
 
-  let ultraElems = [];
+  let ultraNodeAndEdges = [];
 
   for (let i = 0; i < element.length; i++) {
     let el = element[i];
-    let ultraElem = {};
-
-    ultraElem["id"] = generateIdOfElem(parentId, elementName);
-    ultraElem["parentId"] = parentId;
+    let ultraNode = {};
+    let ultraNodeId = generateIdOfElem(parentId, elementName);
+    ultraNode["id"] = ultraNodeId;
+    ultraNode["parentId"] = parentId;
 
     let key = `${elementName}-${i}`;
 
@@ -141,33 +173,48 @@ const processArrayTypeNode = (element, elementName, parentId) => {
       temp[key] = el;
       let nestedElements = [];
       nestedElements.push(temp);
-      ultraElem["value"] = "<Object>";
-      ultraElem["data"] = { label: "<Object>" };
+      ultraNode["value"] = "<Object>";
+      ultraNode["data"] = { label: "<Object>" };
 
-      ultraElem["nestedElements"] = nestedElements;
+      ultraNode["nestedElements"] = nestedElements;
     } else {
-      ultraElem["value"] = el;
-      ultraElem["data"] = { label: el };
-      ultraElem["nestedElements"] = [];
+      ultraNode["value"] = el;
+      ultraNode["data"] = { label: el };
+      ultraNode["nestedElements"] = [];
     }
 
-    ultraElem["position"] = position;
+    ultraNode["position"] = position;
 
-    ultraElems.push(ultraElem);
+    let ultraEdge = {};
+    ultraEdge["id"] = `edge-${ultraNodeId}`;
+    ultraEdge["source"] = parentId;
+    ultraEdge["target"] = ultraNodeId;
+    ultraEdge["type"] = edgeType;
+
+    ultraNodeAndEdges.push({ node: ultraNode, edge: ultraEdge });
   }
 
-  return ultraElems;
+  return ultraNodeAndEdges;
 };
 
 const processMonoTypeNode = (element, elementName, parentId) => {
-  let ultraElem = {};
-  ultraElem["id"] = generateIdOfElem(parentId, elementName);
-  ultraElem["parentId"] = parentId;
-  ultraElem["value"] = element;
-  ultraElem["data"] = { label: element };
-  ultraElem["nestedElements"] = [];
-  ultraElem["position"] = position;
-  return ultraElem;
+  let ultraNode = {};
+  let ultraNodeId = generateIdOfElem(parentId, elementName);
+  ultraNode["id"] = ultraNodeId;
+  ultraNode["parentId"] = parentId;
+  ultraNode["value"] = element;
+  ultraNode["data"] = { label: element };
+  ultraNode["nestedElements"] = [];
+  ultraNode["position"] = position;
+
+  let ultraEdge = {};
+  // { id: 'e12', source: '1', target: '2', type: edgeType }
+  ultraEdge["id"] = `edge-${ultraNodeId}`;
+  ultraEdge["source"] = parentId;
+  ultraEdge["target"] = ultraNodeId;
+  ultraEdge["type"] = edgeType;
+
+  return { node: ultraNode, edge: ultraEdge };
 };
 
 const getElementsInNextLevel = (prevNodes) => {
@@ -210,10 +257,21 @@ const getNewNodesAndEdges = (nodes) => {
     for (let element of node.nestedElements) {
       let elementKey = Object.keys(element)[0];
       let elementVal = Object.values(element)[0];
-      let nodesOfObject = getNodeBasedOnType(elementVal, elementKey, parentId);
+
+      let nodeAndEdgesOfObject = getNodeAndEdgeBasedOnType(
+        elementVal,
+        elementKey,
+        parentId
+      );
+      let nodesOfObject = nodeAndEdgesOfObject.map((ne) => ne.node);
+      let edgesOfObject = nodeAndEdgesOfObject.map((ne) => ne.edge);
 
       if (nodesOfObject !== null && nodesOfObject.length != 0) {
         newNodes.push(...nodesOfObject);
+      }
+
+      if (edgesOfObject !== null && edgesOfObject.length != 0) {
+        newEdges.push(...edgesOfObject);
       }
     }
   }

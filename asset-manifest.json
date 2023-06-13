@@ -1,13 +1,33 @@
 {
   "files": {
-    "main.css": "/static/css/main.ba79485a.css",
-    "main.js": "/static/js/main.966797bc.js",
+    "main.css": "/static/css/main.81a12a44.css",
+    "main.js": "/static/js/main.df30378b.js",
+    "static/media/Aspekta-1000.woff2": "/static/media/Aspekta-1000.c03739b20dbf44b78bcd.woff2",
+    "static/media/Aspekta-950.woff2": "/static/media/Aspekta-950.9160d38036a7a4e076e8.woff2",
+    "static/media/Aspekta-850.woff2": "/static/media/Aspekta-850.d9199a7bcab990366b7c.woff2",
+    "static/media/Aspekta-800.woff2": "/static/media/Aspekta-800.d1d22b5d95269572dde5.woff2",
+    "static/media/Aspekta-550.woff2": "/static/media/Aspekta-550.4c51af4ef284e09e46e4.woff2",
+    "static/media/Aspekta-300.woff2": "/static/media/Aspekta-300.3ffff01a538f9f60e202.woff2",
+    "static/media/Aspekta-900.woff2": "/static/media/Aspekta-900.a9a4c9f2596f10cbccfb.woff2",
+    "static/media/Aspekta-650.woff2": "/static/media/Aspekta-650.660ea150b331e2d437b5.woff2",
+    "static/media/Aspekta-750.woff2": "/static/media/Aspekta-750.26ef046b9975e83de497.woff2",
+    "static/media/Aspekta-500.woff2": "/static/media/Aspekta-500.4cfc4660fe852983a48c.woff2",
+    "static/media/Aspekta-450.woff2": "/static/media/Aspekta-450.6b5d64703ad386d7031c.woff2",
+    "static/media/Aspekta-600.woff2": "/static/media/Aspekta-600.fd13fbc9797f0b53c3ff.woff2",
+    "static/media/Aspekta-700.woff2": "/static/media/Aspekta-700.e540917a428806e254d3.woff2",
+    "static/media/Aspekta-200.woff2": "/static/media/Aspekta-200.ebb06950808cd1a5b376.woff2",
+    "static/media/Aspekta-150.woff2": "/static/media/Aspekta-150.2109d94424ca18df26cd.woff2",
+    "static/media/Aspekta-250.woff2": "/static/media/Aspekta-250.0642a9676bc953b6985a.woff2",
+    "static/media/Aspekta-350.woff2": "/static/media/Aspekta-350.1c5e94d53cdc7772091f.woff2",
+    "static/media/Aspekta-400.woff2": "/static/media/Aspekta-400.4133eca8d65ed7fa0b9e.woff2",
+    "static/media/Aspekta-50.woff2": "/static/media/Aspekta-50.ec715ef4273fde2c7ed6.woff2",
+    "static/media/Aspekta-100.woff2": "/static/media/Aspekta-100.351780ccc6ca9ddb6a6e.woff2",
     "index.html": "/index.html",
-    "main.ba79485a.css.map": "/static/css/main.ba79485a.css.map",
-    "main.966797bc.js.map": "/static/js/main.966797bc.js.map"
+    "main.81a12a44.css.map": "/static/css/main.81a12a44.css.map",
+    "main.df30378b.js.map": "/static/js/main.df30378b.js.map"
   },
   "entrypoints": [
-    "static/css/main.ba79485a.css",
-    "static/js/main.966797bc.js"
+    "static/css/main.81a12a44.css",
+    "static/js/main.df30378b.js"
   ]
 }

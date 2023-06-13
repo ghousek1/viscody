@@ -1,23 +1,34 @@
 import { React, useState, useEffect } from "react";
 import "../App.css";
 import { ThemeContext } from "./ThemeContext";
+import { useCookieValue } from "@react-hookz/web/esm/useCookieValue";
 
 function ThemeContextDefaultProvider(props) {
   const [userThemeMode, setUserThemeMode] = useState("light");
+  const [themeCookie, setThemeCookie, ] = useCookieValue(
+    "viscodyThemeCookie",
+    { expires: 2592000 }
+  );
 
   useEffect(() => {
+    let userColorScheme = "light";
     window
       .matchMedia("(prefers-color-scheme: dark)")
       .addEventListener("change", (event) => {
-        const colorScheme = event.matches ? "dark" : "light";
-        setUserThemeMode(colorScheme);
+        userColorScheme = event.matches ? "dark" : "light";
       });
+    
+
+    const colorScheme = (themeCookie === "dark" || themeCookie === "light") 
+                        ?  themeCookie : userColorScheme;
+                        
+    setThemeCookie(colorScheme);
+    setUserThemeMode(colorScheme);
   }, []);
 
   useEffect(() => {
     toggleCSSVariables();
   }, [userThemeMode]);
-
 
   const lightThemeCSSVariables = [
     {
@@ -42,7 +53,9 @@ function ThemeContextDefaultProvider(props) {
   ];
 
   const toggleUserThemeMode = () => {
-    setUserThemeMode(userThemeMode === "dark" ? "light" : "dark");
+    let toggledThemeMode = userThemeMode === "dark" ? "light" : "dark";
+    setUserThemeMode(toggledThemeMode);
+    setThemeCookie(toggledThemeMode);
   };
 
   const toggleCSSVariables = () => {

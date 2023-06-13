@@ -1,12 +1,22 @@
 import React from "react";
-import { useState, useRef, useCallback } from "react";
-import Visualizer from "./Visualizer";
+import { useState, useRef, useCallback,useContext } from "react";
+import Visualizer2 from "./Visualizer2";
 import DataEditor from "./DataEditor";
+import { DataTypeContext } from "../context/DataTypeContext";
+
+import { getNodesAndEdges } from ".././helper/NodesAndEdgesMaker";
 
 function HomeSection() {
+  const [dataType ,] = useContext(DataTypeContext);
   const [codeText, setCodeText] = useState("");
+  const [newNodes, setNewNodes] = useState([]);
+  const [newEdges, setNewEdges] = useState([]);
+  
   function handleEditorChange(value, event) {
     setCodeText(value);
+    let [newUpdatedNodes, newUpdatedEdges] = getNodesAndEdges(dataType,value);
+    setNewNodes([...newUpdatedNodes]);
+    setNewEdges([...newUpdatedEdges]);
   }
 
   const sidebarRef = useRef(null);
@@ -49,8 +59,7 @@ function HomeSection() {
         id="sidebar"
         style={{ width: sidebarWidth }}
         className="z-2 flex w-[35%] min-w-[20%]
-         max-w-[70%] flex-row
-        border-[0.1rem] border-r-black "
+         max-w-[70%] flex-row "
         onMouseDown={(e) => e.preventDefault()}
       >
         <div
@@ -70,8 +79,11 @@ function HomeSection() {
         ></div>
       </div>
 
-      <div id="content-id" className="z-1 flex-1">
-        <Visualizer codeText={codeText} />
+      <div id="content-id" className="flex-1 z-1">
+        <Visualizer2
+          newNodes={newNodes}
+          newEdges={newEdges}
+        />
       </div>
     </div>
   );

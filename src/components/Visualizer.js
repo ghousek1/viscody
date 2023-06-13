@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import SyntaxHighlighter from "react-syntax-highlighter";
 import { DataTypeContext } from "../context/DataTypeContext";
 import { ThemeContext } from "../context/ThemeContext";
 import {convertToJson} from ".././helper/DataConverter"
@@ -12,20 +11,36 @@ import ReactFlow, {
   Background,
 } from "reactflow";
 import "reactflow/dist/style.css";
+// import { nodes, edges } from '../helper/node-edges';
 
 function Visualizer(props) {
   const [dataType, changeDataType] = useContext(DataTypeContext);
-  const [userThemeMode, toggleUserThemeMode] = useContext(ThemeContext);
+  const [userThemeMode, ] = useContext(ThemeContext);
+ 
+  
 
-  const initialNodes = [
+  const nodes = [
     { id: "1", position: { x: 0, y: 0 }, data: { label: "1" } },
     { id: "2", position: { x: 0, y: 100 }, data: { label: "2" } },
     { id: "3", position: { x: 0, y: 150 }, data: { label: "3" } },
   ];
-  const initialEdges = [
+  const edges = [
     { id: "e1-2", source: "1", target: "2" },
     { id: "e3-1", source: "3", target: "1" },
   ];
+
+
+  const darkVisMode = {
+    background: '#fcfcfc',
+  };
+
+  const lightVisMode = {
+    background: '#141414',
+  };
+
+
+
+
 
   const renderVisualization = (dataType, codeText) => {
     if (dataType === "csv") {
@@ -42,19 +57,24 @@ function Visualizer(props) {
     <>
       <div
         id="visualizer"
-        // style={customStyle}
-        className=" w-full h-[100%]  
-         border-gray-500 border-[0.1rem]"
+        className=" w-full h-[100%]"
       >
         <ReactFlow
-          nodes={initialNodes}
-          edges={initialEdges}
+          nodes={nodes}
+          edges={edges}
           attributionPosition="top-right"
           elevateNodesOnSelect={true}
+          fitView
         >
-          <Background variant="dots" style={{ background: "white" }} />
-          <Controls position="top-right" style={{ background: "black" }} />
-          <MiniMap position = "bottom-right" zoomable pannable/>
+          <Background variant="dots" 
+               style = { userThemeMode ==="dark" ? lightVisMode :  darkVisMode  } />
+
+          <Controls position="top-right" 
+              style = { userThemeMode ==="dark" ? lightVisMode :  darkVisMode } />
+
+          <MiniMap position = "bottom-right" zoomable pannable 
+              style = { userThemeMode ==="dark" ? lightVisMode :  darkVisMode  }/>
+              
         </ReactFlow>
 
       </div>

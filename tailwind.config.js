@@ -5,7 +5,7 @@ module.exports = {
   ],
   theme: {
     extend: {fontFamily: {
-      uno:["Source Sans Pro", "sans-serif"],
+      uno:["Aspekta", "sans-serif"],
       monospace: ['JetBrains Mono', 'monospace'],
 
     },

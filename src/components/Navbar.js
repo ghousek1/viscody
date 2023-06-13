@@ -26,7 +26,8 @@ function NavBar() {
   return (
     <nav
       id="navbar"
-      className="flex h-[2rem] w-full items-center justify-between px-3 md:px-6 my-2 md:my-2 "
+      className="flex h-[2rem] w-full items-center justify-between px-3
+       md:px-6 py-4 my-2 md:my-2 border-b-2 "
     >
       <div className="flex flex-row gap-5 align-middle">
       <a href="/" className="z-[100] cursor-pointer">

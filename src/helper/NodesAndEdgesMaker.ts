@@ -1,5 +1,8 @@
-import { getMasterNodesAndEdges } from "./JsonHelper.js";
-import { getElements } from "./DataConverter.js";
+import { getMasterNodesAndEdges } from "./JsonHelper";
+import { getElements } from "./DataConverter";
+import { DataTypeValue } from "../util/DataTypeUtil";
+import { Node } from "../models/Node";
+import { Edge } from "../models/Edge";
 
 const position = { x: 0, y: 0 };
 const edgeType = 'smoothstep';
@@ -24,9 +27,9 @@ export const newEdges = [
 
 
 
-export const getNodesAndEdges = (dataType,value) =>{
-  const emptyData = [[], []];
-  const element = getElements(dataType,value);
+export const getNodesAndEdges = (dataType: DataTypeValue ,value:string): [Node[],Edge[]] =>{
+  const emptyData: [Node[],Edge[]] = [[], []];
+  const element: any = getElements(dataType,value);
 
   if(element === null){
     return emptyData;

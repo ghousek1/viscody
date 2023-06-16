@@ -1,4 +1,6 @@
-const convertYamlToJson = (codeText) => {
+import { DataTypeValue } from "../util/DataTypeUtil";
+
+const convertYamlToJson = (codeText: string): string => {
   const yaml = require("js-yaml");
   try {
     if (typeof codeText !== "undefined" && codeText !== "") {
@@ -12,7 +14,7 @@ const convertYamlToJson = (codeText) => {
   }
 };
 
-const convertXmlToJson = (codeText) => {
+const convertXmlToJson = (codeText: string): string => {
   let convert = require("xml-js");
   try {
     if (typeof codeText !== "undefined" && codeText !== "") {
@@ -27,7 +29,7 @@ const convertXmlToJson = (codeText) => {
   }
 };
 
-const convertToJson = (dataType, codeText) => {
+const convertToJson = (dataType: DataTypeValue, codeText: string): string => {
   let result = "";
   switch (dataType) {
     case "json":
@@ -53,7 +55,7 @@ const convertToJson = (dataType, codeText) => {
 };
 
 
-const parseJson = (str) => {
+const parseJson = (str: string): string | null => {
   try {
     let parsedObj = JSON.parse(str);
     return parsedObj;
@@ -62,7 +64,7 @@ const parseJson = (str) => {
   }
 };
 
-export const getElements =(dataType, codeText) =>{
+export const getElements =(dataType: DataTypeValue, codeText: string) =>{
   const jsonStr= convertToJson(dataType, codeText);
   const element= parseJson(jsonStr);
   return element;

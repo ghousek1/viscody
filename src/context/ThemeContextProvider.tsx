@@ -1,17 +1,19 @@
-import { React, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../App.css";
 import { ThemeContext } from "./ThemeContext";
 import { useCookieValue } from "@react-hookz/web/esm/useCookieValue";
+import {ThemeMode} from "../util/ThemeUtil";
 
-function ThemeContextDefaultProvider(props) {
-  const [userThemeMode, setUserThemeMode] = useState("light");
+const ThemeContextDefaultProvider = (props: any) => {
+  const [userThemeMode, setUserThemeMode] = useState<ThemeMode>("light");
   const [themeCookie, setThemeCookie, ] = useCookieValue(
     "viscodyThemeCookie",
     { expires: 2592000 }
   );
 
   useEffect(() => {
-    let userColorScheme = "light";
+    let userColorScheme: ThemeMode = "light";
+
     window
       .matchMedia("(prefers-color-scheme: dark)")
       .addEventListener("change", (event) => {
@@ -19,7 +21,7 @@ function ThemeContextDefaultProvider(props) {
       });
     
 
-    const colorScheme = (themeCookie === "dark" || themeCookie === "light") 
+     const colorScheme: ThemeMode = (themeCookie === "dark" || themeCookie === "light") 
                         ?  themeCookie : userColorScheme;
                         
     setThemeCookie(colorScheme);
@@ -53,7 +55,7 @@ function ThemeContextDefaultProvider(props) {
   ];
 
   const toggleUserThemeMode = () => {
-    let toggledThemeMode = userThemeMode === "dark" ? "light" : "dark";
+    let toggledThemeMode: ThemeMode = userThemeMode === "dark" ? "light" : "dark";
     setUserThemeMode(toggledThemeMode);
     setThemeCookie(toggledThemeMode);
   };
@@ -63,14 +65,18 @@ function ThemeContextDefaultProvider(props) {
       userThemeMode === "light"
         ? lightThemeCSSVariables
         : darkThemeCSSVariables;
-    themeCSSVariables.map((cssVar) => {
+        
+    themeCSSVariables.forEach((cssVar) => {
       document.documentElement.style.setProperty(cssVar.name, cssVar.value);
     });
   };
 
   return (
     <>
-      <ThemeContext.Provider value={[userThemeMode, toggleUserThemeMode]}>
+      <ThemeContext.Provider value={{
+      themeMode:userThemeMode,
+      toggleThemeMode: toggleUserThemeMode,
+      }}>
         {props.children}
       </ThemeContext.Provider>
     </>

@@ -1,19 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, { ReactElement, useContext, useState } from "react";
 import { Link } from "react-scroll";
-import { ThemeContext } from "../context/ThemeContext";
+import { IThemeContextType, ThemeContext } from "../context/ThemeContext";
 import DataTypeDropDown from "./DataTypeDropDown";
 
-function NavBar() {
-  const [sideMenu, setSideMenu] = useState(false);
+const NavBar = (): ReactElement => {
+  const [sideMenu, setSideMenu] = useState<boolean>(false);
+  const userThemeModeContext = useContext<IThemeContextType>(ThemeContext);
 
-  const [ , toggleUserThemeMode] = useContext(ThemeContext);
-
-  const toggleSideMenu = () => {
+  const toggleSideMenu = (): void => {
     setSideMenu(!sideMenu);
   };
 
-  const toggleTheme = () => {
-    toggleUserThemeMode();
+  const toggleTheme = (): void => {
+    userThemeModeContext.toggleThemeMode();
   };
 
   const navlinks = [

@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import React, { ReactElement, useCallback, useContext } from "react";
 import ReactFlow, {
   addEdge,
   ConnectionLineType,
@@ -8,12 +8,15 @@ import ReactFlow, {
   MiniMap,
   Controls,
   Background,
+  BackgroundVariant,
 } from "reactflow";
 import dagre from "dagre";
 
 import "reactflow/dist/style.css";
-import { ThemeContext } from "../context/ThemeContext";
+import { IThemeContextType, ThemeContext } from "../context/ThemeContext";
 import { useEffect,useState } from "react";
+import { Node } from "../models/Node";
+import { Edge } from "../models/Edge";
 
 
 const dagreGraph = new dagre.graphlib.Graph();
@@ -23,10 +26,10 @@ const nodeWidth = 160;
 const nodeHeight = 36;
 
 
-const initialNodes = [];
-const initialEdges = [];
+const initialNodes: any[] = [];
+const initialEdges: any[] = [];
 
-const getLayoutedElements = (nodes, edges, direction = "TB") => {
+const getLayoutedElements = (nodes: Node[], edges: Edge[], direction: string = "TB"): { nodes: Node[], edges: Edge[] } => {
   const isHorizontal = direction === "LR";
   dagreGraph.setGraph({ rankdir: direction });
 
@@ -63,8 +66,15 @@ const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
   initialEdges
 );
 
-function GraphVisualizer({codeText, newNodes, newEdges }) {
-  const [userThemeMode, ] = useContext(ThemeContext);
+
+interface IGraphVisualizerProps{
+  codeText: string;
+  newNodes:Node[];
+  newEdges:Edge[]; 
+}
+
+const GraphVisualizer = ({codeText, newNodes, newEdges }: IGraphVisualizerProps): ReactElement => {
+  const userThemeModeContext = useContext<IThemeContextType>(ThemeContext);
   const [layoutDirection, ] = useState("TB");
 
   const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes);
@@ -74,7 +84,7 @@ function GraphVisualizer({codeText, newNodes, newEdges }) {
     rerenderLayout(newNodes, newEdges);
   }, [newNodes, newEdges]);
 
-  const rerenderLayout = (newNodes, newEdges) => {
+  const rerenderLayout = (newNodes: Node[] , newEdges: Edge[]) => {
     const { nodes: layoutedNodes, edges: layoutedEdges } = 
         getLayoutedElements(newNodes,newEdges,layoutDirection);
       setNodes([...layoutedNodes]);
@@ -92,16 +102,16 @@ function GraphVisualizer({codeText, newNodes, newEdges }) {
   //   []
   // );
 
-  const onLayout = useCallback(
-    (direction) => {
-      const { nodes: layoutedNodes, edges: layoutedEdges } =
-        getLayoutedElements(nodes, edges, direction);
+  // const onLayout = useCallback(
+  //   (direction: string) => {
+  //     const { nodes: layoutedNodes, edges: layoutedEdges } =
+  //       getLayoutedElements(nodes, edges, direction);
 
-      setNodes([...layoutedNodes]);
-      setEdges([...layoutedEdges]);
-    },
-    [nodes, edges]
-  );
+  //     setNodes([...layoutedNodes]);
+  //     setEdges([...layoutedEdges]);
+  //   },
+  //   [nodes, edges]
+  // );
 
   const darkVisMode = {
     background: "#fcfcfc",
@@ -124,20 +134,20 @@ function GraphVisualizer({codeText, newNodes, newEdges }) {
           fitView
         >
           <Background
-            variant="dots"
-            style={userThemeMode === "dark" ? lightVisMode : darkVisMode}
+            variant={BackgroundVariant.Dots}
+            style={userThemeModeContext.themeMode === "dark" ? lightVisMode : darkVisMode}
           />
 
           <Controls
             position="top-right"
-            style={userThemeMode === "dark" ? lightVisMode : darkVisMode}
+            style={userThemeModeContext.themeMode === "dark" ? lightVisMode : darkVisMode}
           />
 
           <MiniMap
             position="bottom-right"
             zoomable
             pannable
-            style={userThemeMode === "dark" ? lightVisMode : darkVisMode}
+            style={userThemeModeContext.themeMode === "dark" ? lightVisMode : darkVisMode}
           />
 
           {/* <Panel position="top-right">
@@ -145,6 +155,7 @@ function GraphVisualizer({codeText, newNodes, newEdges }) {
         <button onClick={() => onLayout('LR')}>horizontal layout</button>
       </Panel> */}
         </ReactFlow>
+        
       </div>
     </>
   );

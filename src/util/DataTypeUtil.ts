@@ -1,4 +1,6 @@
-export const identifyJsonDataType = (val) => {
+export type ObjectDataType = "mono"|"object"|"array"|"no-type";
+
+export const identifyObjectDataType = (val: any): ObjectDataType => {
     if (val === null || val === undefined) {
       return "no-type";
     }
@@ -14,3 +16,4 @@ export const identifyJsonDataType = (val) => {
     return "mono";
   };
   
+  export type DataTypeValue = "json" | "yaml" | "xml" | "csv";

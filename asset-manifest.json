@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.534073ce.css",
-    "main.js": "/static/js/main.f7b246a2.js",
+    "main.css": "/static/css/main.6cb1373e.css",
+    "main.js": "/static/js/main.23f25c1b.js",
     "static/media/Aspekta-1000.woff2": "/static/media/Aspekta-1000.c03739b20dbf44b78bcd.woff2",
     "static/media/Aspekta-950.woff2": "/static/media/Aspekta-950.9160d38036a7a4e076e8.woff2",
     "static/media/Aspekta-850.woff2": "/static/media/Aspekta-850.d9199a7bcab990366b7c.woff2",
@@ -23,11 +23,11 @@
     "static/media/Aspekta-50.woff2": "/static/media/Aspekta-50.ec715ef4273fde2c7ed6.woff2",
     "static/media/Aspekta-100.woff2": "/static/media/Aspekta-100.351780ccc6ca9ddb6a6e.woff2",
     "index.html": "/index.html",
-    "main.534073ce.css.map": "/static/css/main.534073ce.css.map",
-    "main.f7b246a2.js.map": "/static/js/main.f7b246a2.js.map"
+    "main.6cb1373e.css.map": "/static/css/main.6cb1373e.css.map",
+    "main.23f25c1b.js.map": "/static/js/main.23f25c1b.js.map"
   },
   "entrypoints": [
-    "static/css/main.534073ce.css",
-    "static/js/main.f7b246a2.js"
+    "static/css/main.6cb1373e.css",
+    "static/js/main.23f25c1b.js"
   ]
 }

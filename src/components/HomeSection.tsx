@@ -1,4 +1,5 @@
-import React, { ReactElement,FC } from "react";
+import React, { ReactElement } from "react";
+import './HomeSection.css';
 import {
   useState,
   useRef,
@@ -14,7 +15,7 @@ import {
   IDataTypeContextType,
 } from "../context/DataTypeContext";
 import SplitPane from "react-split-pane";
-import { Split } from "react-split-pane";
+import { SplitPaneProps} from "react-split-pane";
 
 import { getNodesAndEdges } from "../helper/NodesAndEdgesMaker";
 import { Node } from "../models/Node";
@@ -40,30 +41,41 @@ const HomeSection = (): ReactElement => {
     setNewEdges([...newUpdatedEdges]);
   }, [codeText]);
 
-  // const sidebarRef = useRef(null);
+  const splitPaneProps: SplitPaneProps ={
+     split:"vertical",
+     minSize:300,
+     defaultSize:"30%",
+     maxSize:-300
+  }
+
+  const mobileViewSplitPaneProps: SplitPaneProps ={
+    split:"horizontal",
+    minSize:200,
+    defaultSize:"25%",
+    maxSize:-200
+ }
 
   return (
-    <div id="container-id" className="relative flex h-[100vh] flex-row">
+    <div id="container-id" className="relative h-[100vh]">
     
-      
-      {/* <SplitPane split="vertical" minSize={200} defaultSize={200} maxSize={4}/> */}
+      <SplitPane {...splitPaneProps} >
         <div
           id="sidebar-content-id"
-          className="h-[100%]
-        flex-1 resize-y overflow-auto"
+                    className="h-[100%] flex-1 resize-y overflow-auto"
         >
           <DataEditor handleEditorChange={handleEditorChange} />
         </div>
 
-        <div id="content-id" className="flex-1 z-1">
+        <div id="content-id" className="flex-1 h-[100%] z-1">
           <Visualizer
             codeText={codeText}
             newNodes={newNodes}
             newEdges={newEdges}
           />
         </div>
-      {/* </SplitPane> */}
-    </div>
+      </SplitPane>
+      
+     </div>
   );
 }
 

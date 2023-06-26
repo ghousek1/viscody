@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.de95a609.css",
-    "main.js": "/static/js/main.20d27bd8.js",
+    "main.js": "/static/js/main.0040c677.js",
     "static/media/Aspekta-1000.woff2": "/static/media/Aspekta-1000.c03739b20dbf44b78bcd.woff2",
     "static/media/Aspekta-950.woff2": "/static/media/Aspekta-950.9160d38036a7a4e076e8.woff2",
     "static/media/Aspekta-850.woff2": "/static/media/Aspekta-850.d9199a7bcab990366b7c.woff2",
@@ -24,10 +24,10 @@
     "static/media/Aspekta-100.woff2": "/static/media/Aspekta-100.351780ccc6ca9ddb6a6e.woff2",
     "index.html": "/index.html",
     "main.de95a609.css.map": "/static/css/main.de95a609.css.map",
-    "main.20d27bd8.js.map": "/static/js/main.20d27bd8.js.map"
+    "main.0040c677.js.map": "/static/js/main.0040c677.js.map"
   },
   "entrypoints": [
     "static/css/main.de95a609.css",
-    "static/js/main.20d27bd8.js"
+    "static/js/main.0040c677.js"
   ]
 }
